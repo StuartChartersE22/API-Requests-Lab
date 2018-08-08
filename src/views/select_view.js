@@ -1,4 +1,5 @@
 const PubSub = require('../helpers/pub_sub.js');
+const DropDownHelper = require('../helpers/drop_down_helper.js');
 
 const SelectView = function (dropDown) {
   this.dropDown = dropDown;
@@ -7,20 +8,12 @@ const SelectView = function (dropDown) {
 SelectView.prototype.bindingEvents = function () {
   PubSub.subscribe(`Countries:All-countries-ready`, (evt) => {
     const countries = evt.detail;
-    this.populate(countries);
-    this.dropDown.addEventListener('change', (evt) => {
-      const selectedIndex = evt.target.value;
-      PubSub.publish('SelectView:country-selected', selectedIndex);
-    });
+    DropDownHelper.createOptions(this.dropDown, countries, `name`)
   });
-};
 
-SelectView.prototype.populate = function (countries) {
-  countries.forEach( (country, index) => {
-    const entry = document.createElement(`option`);
-    entry.textContent = country.name;
-    entry.value = index;
-    this.dropDown.appendChild(entry);
+  this.dropDown.addEventListener('change', (evt) => {
+    const selectedIndex = evt.target.value;
+    PubSub.publish('SelectView:country-selected', selectedIndex);
   });
 };
 

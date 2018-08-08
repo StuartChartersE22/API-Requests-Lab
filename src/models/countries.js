@@ -1,5 +1,6 @@
 const PubSub = require('../helpers/pub_sub.js');
 const Request = require('../helpers/request.js');
+const DropDownHelper = require(`../helpers/drop_down_helper.js`)
 
 const Countries = function (){
   this.countries = null;
@@ -14,14 +15,9 @@ Countries.prototype.bindEvents = function () {
 
     PubSub.subscribe('SelectView:country-selected', (evt) => {
     const indexNumber = evt.detail;
-    const foundCountry = this.findCountry(indexNumber);
+    const foundCountry = DropDownHelper.selectOption(this.countries, indexNumber);
     PubSub.publish('Countries:found-country', foundCountry);
   });
-};
-
-Countries.prototype.findCountry = function (countryIndex) {
-  const selectedCountry = this.countries[countryIndex];
-  PubSub.publish('Countries:selected-country-ready', selectedCountry)
 };
 
 module.exports = Countries;

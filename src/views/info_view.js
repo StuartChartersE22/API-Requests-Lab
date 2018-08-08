@@ -5,7 +5,7 @@ const InfoView = function (container) {
 }
 
 InfoView.prototype.bindEvents = function () {
-  PubSub.subscribe('Countries:selected-country-ready', (evt) => {
+  PubSub.subscribe('Countries:found-country', (evt) => {
     const country = evt.detail;
     this.render(country)
   });
@@ -33,11 +33,7 @@ function addName(name, container) {
 };
 
 function addRegion(region, container) {
-  const regionHeader = document.createElement(`h3`);
-  regionHeader.classList.add(`header`);
-  regionHeader.textContent = `Region:`;
-  container.appendChild(regionHeader);
-
+  addDetailHeader(`Region:`, container)
   const countryRegion = document.createElement(`p`);
   countryRegion.classList.add('country-region');
   countryRegion.textContent = region;
@@ -52,11 +48,7 @@ function addFlag(flagSRC, container) {
 };
 
 function addLanguages(languages, container) {
-  const languageTitle = document.createElement(`h3`);
-  languageTitle.classList.add(`header`);
-  languageTitle.textContent = `Languages:`;
-  container.appendChild(languageTitle);
-
+  addDetailHeader(`Languages:`, container)
   const countryLanguages = document.createElement(`ul`);
   languages.forEach(language => {
     const listItem = document.createElement(`li`);
@@ -65,4 +57,11 @@ function addLanguages(languages, container) {
     countryLanguages.appendChild(listItem);
   });
   container.appendChild(countryLanguages);
+}
+
+function addDetailHeader(header, container) {
+  const languageTitle = document.createElement(`h3`);
+  languageTitle.classList.add(`header`);
+  languageTitle.textContent = header;
+  container.appendChild(languageTitle);
 }
