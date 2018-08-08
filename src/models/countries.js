@@ -22,7 +22,6 @@ Countries.prototype.bindEvents = function () {
 Countries.prototype.findCountry = function (countryIndex) {
   const selectedCountry = this.countries[countryIndex];
   PubSub.publish('Countries:selected-country-ready', selectedCountry)
-console.dir(selectedCountry);
 };
 
 module.exports = Countries;
