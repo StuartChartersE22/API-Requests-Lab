@@ -8,6 +8,10 @@ SelectView.prototype.bindingEvents = function () {
   PubSub.subscribe(`Countries:All-countries-ready`, (evt) => {
     const countries = evt.detail;
     this.populate(countries);
+    this.dropDown.addEventListener('change', (evt) => {
+      const selectedIndex = evt.target.value;
+      PubSub.publish('SelectView:country-selected', selectedIndex);
+    });
   });
 };
 
@@ -19,5 +23,8 @@ SelectView.prototype.populate = function (countries) {
     this.dropDown.appendChild(entry);
   });
 };
+
+
+
 
 module.exports = SelectView;
