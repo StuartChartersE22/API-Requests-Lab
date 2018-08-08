@@ -1,1 +1,9 @@
-.countryFlag
+.country-flag{
+  width:25%;
+  height:auto;
+}
+
+body{
+  text-align: center;
+  background-image: url("");
+}
